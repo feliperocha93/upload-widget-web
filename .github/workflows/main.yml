@@ -5,8 +5,12 @@ on:
     branches:
       - master
 
+env:
+  AWS_S3_BUCKET: upload-widget-web-static
+  SOURCE_DIR: dist
+
 jobs:
-  dpeloy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,3 +38,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Sync files to S3
+        id: sync
+        run: |
+          aws s3 sync ${{ env.SOURCE_DIR }} s3://${{ env.AWS_S3_BUCKET }} --delete
