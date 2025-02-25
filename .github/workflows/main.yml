@@ -49,3 +49,8 @@ jobs:
         id: sync-cdn
         run: |
           aws s3 sync ${{ env.SOURCE_DIR }} s3://${{ env.AWS_S3_BUCKET_CDN }} --delete
+
+      - name: Invalidate CDN cache
+        id: invalidate-cdn
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CDN_DISTRIBUTION_ID }} --paths "/*"
