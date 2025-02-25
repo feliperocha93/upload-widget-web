@@ -6,7 +6,8 @@ on:
       - master
 
 env:
-  AWS_S3_BUCKET: upload-widget-web-static
+  AWS_S3_BUCKET_STATIC: upload-widget-web-static
+  AWS_S3_BUCKET_CDN: upload-widget-web-cdn
   SOURCE_DIR: dist
 
 jobs:
@@ -39,7 +40,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Sync files to S3
-        id: sync
+      - name: Sync files to S3 Static
+        id: sync-static
         run: |
-          aws s3 sync ${{ env.SOURCE_DIR }} s3://${{ env.AWS_S3_BUCKET }} --delete
+          aws s3 sync ${{ env.SOURCE_DIR }} s3://${{ env.AWS_S3_BUCKET_STATIC }} --delete
+
+      - name: Sync files to S3 CDN
+        id: sync-cdn
+        run: |
+          aws s3 sync ${{ env.SOURCE_DIR }} s3://${{ env.AWS_S3_BUCKET_CDN }} --delete
