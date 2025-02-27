@@ -29,7 +29,7 @@ jobs:
 
       - name: Pull Vercel config
         id: pull-vercel-config
-        run: vercel pull --yes --enviroment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --envrionment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build
         id: build
