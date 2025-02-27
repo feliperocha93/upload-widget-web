@@ -16,7 +16,7 @@ export function UploadWidgetTitle() {
           </span>
         </span>
       ) : (
-        <span>Upload files Vercel</span>
+        <span>Upload files Vercel Preview</span>
       )}
     </div>
   );
